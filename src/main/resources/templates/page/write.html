@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}">
+<div layout:fragment="content">
+  <table class="table">
+    <thead>
+    <tr>
+      <th scope="col">번호</th>
+      <th scope="col">제목</th>
+      <th scope="col">작성자</th>
+      <th scope="col">작성일</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>안녕하세요</td>
+      <td>홍길동</td>
+      <td>2017-05-04</td>
+    </tr>
+    </tbody>
+  </table>
+  <a href="/write">
+    <button type="button" class="btn btn-primary">글쓰기</button>
+  </a>
+</div>
+</html>
