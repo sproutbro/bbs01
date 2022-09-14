@@ -4,26 +4,30 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/default_layout}">
 <div layout:fragment="content">
+  <form method="post" action="/write">
   <table class="table">
     <thead>
     <tr>
-      <th scope="col">번호</th>
-      <th scope="col">제목</th>
-      <th scope="col">작성자</th>
-      <th scope="col">작성일</th>
+      <th scope="col" colspan="2">게시판 글쓰기 양식</th>
     </tr>
     </thead>
     <tbody>
     <tr>
-      <th scope="row">1</th>
-      <td>안녕하세요</td>
-      <td>홍길동</td>
-      <td>2017-05-04</td>
+      <th scope="row"><input type="text" class="form-control" placeholder="글 제목" name="bbsTitle" maxlength="50"></th>
+    </tr>
+    <tr>
+      <td><textarea class="form-control" placeholder="글 내용" name="bbsContent"></textarea></td>
     </tr>
     </tbody>
   </table>
-  <a href="/write">
-    <button type="button" class="btn btn-primary">글쓰기</button>
+  <input class="btn btn-primary" type="submit" value="글 쓰기">
+  <a href="/bbs">
+    <button type="button" class="btn btn-primary">목록</button>
   </a>
+  </form>
+
+  <div th:if="${bbsID != null}">
+    <span th:text="${bbsID}"></span>번째 글 등록완료
+  </div>
 </div>
 </html>

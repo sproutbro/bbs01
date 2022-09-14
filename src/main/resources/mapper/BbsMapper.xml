@@ -2,20 +2,34 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.example.bbs.bbs.UserRepository">
-    <select id="getUserPassword" parameterType="String" resultType="String">
-        select user_password from tbl_user where user_id = #{userID}
+<mapper namespace="com.example.bbs.bbs.BbsRepository">
+    <insert id="insertBbs" parameterType="String" useGeneratedKeys="false">
+        insert into tbl_bbs (bbsID, bbsTitle, userID, bbsDate, bbsContent, bbsAvailable)
+        VALUES (bbs_seq.nextval, #{bbsTitle}, #{userID}, SYSDATE, #{bbsContent}, 1)
+        <selectKey keyProperty="bbsID" resultType="int" order="AFTER">
+            select bbs_seq.currval from dual
+        </selectKey>
+    </insert>
+    <select id="selectBbsList" parameterType="Integer" resultType="com.example.bbs.model.Bbs">
+        <![CDATA[
+        select * from
+            (select rownum rn2, BBSID, BBSTITLE, USERID, BBSDATE, BBSCONTENT, BBSAVAILABLE from
+                (select rownum rn1, BBSID, BBSTITLE,USERID, BBSDATE, BBSCONTENT, BBSAVAILABLE from TBL_BBS where BBSAVAILABLE = 1 order by BBSID desc) where rn1 <= #{pageNumber}) where rn2 <= 10
+        ]]>
+    </select>
+    <select id="getNext" resultType="int">
+        select max(ROWNUM) from TBL_BBS
     </select>
 
-    <insert id="insertUser" parameterType="com.example.bbs.model.User">
-        insert into
-            TBL_USER
-        values (
-                #{userID},
-                #{userPassword},
-                #{userName},
-                #{userGender},
-                #{userEmail}
-               )
-    </insert>
+    <select id="selectBbsByID" parameterType="Integer" resultType="com.example.bbs.model.Bbs">
+        select * from tbl_bbs where bbsID = #{bbsID}
+    </select>
+
+    <update id="updateBbs" parameterType="com.example.bbs.model.Bbs">
+        update tbl_bbs set bbsTitle = #{bbsTitle}, bbsContent = #{bbsContent} where bbsID = #{bbsID}
+    </update>
+
+    <update id="deleteBBs" parameterType="Integer">
+        update tbl_bbs set bbsAvailable = 0 where bbsID = #{bbsID}
+    </update>
 </mapper>

@@ -1,11 +1,22 @@
 package com.example.bbs.bbs;
 
+import com.example.bbs.model.Bbs;
 import com.example.bbs.model.User;
 import org.apache.ibatis.annotations.Mapper;
 
-@Mapper
-public interface UserRepository {
-    String getUserPassword(String userID);
+import java.util.List;
 
-    int insertUser(User user);
+@Mapper
+public interface BbsRepository {
+    int insertBbs(Bbs bbs);
+
+    List<Bbs> selectBbsList(int pageNumber);
+
+    int getNext();
+
+    Bbs selectBbsByID(int bbsID);
+
+    int updateBbs(Bbs bbs);
+
+    int deleteBBs(int bbsID);
 }

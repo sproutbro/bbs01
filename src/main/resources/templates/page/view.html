@@ -4,6 +4,46 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/default_layout}">
 <div layout:fragment="content">
-  <h1>Content</h1>
+    <div class="card" th:if="${bbs}" th:object="${bbs}">
+      <div class="card-header">
+        <th:block th:text="*{bbsTitle}" />
+      </div>
+      <div class="card-body">
+        <blockquote class="blockquote mb-0">
+          <table class="table">
+            <thead>
+            <tr>
+              <th scope="col" colspan="2">내용</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td  colspan="2" th:text="*{bbsContent}"></td>
+            </tr>
+            <tr>
+              <th scope="row">작성자</th>
+              <td th:text="*{userID}"></td>
+            </tr>
+            <tr>
+              <th scope="row">작성일</th>
+              <td th:text="*{bbsDate}"></td>
+            </tr>
+            </tbody>
+          </table>
+          <a href="/bbs">
+            <button type="button" class="btn btn-primary">목록</button>
+          </a>
+
+          <th:block th:if="${session.userID} == *{userID}">
+            <a th:href="@{'/update/' + *{bbsID}}">
+              <button type="button" class="btn btn-primary">수정하기</button>
+            </a>
+            <a th:href="@{'/delete/' + *{bbsID}}">
+              <button onclick="return confirm('정말로 삭제하시겠습니까?');" type="button" class="btn btn-primary">삭제하기</button>
+            </a>
+          </th:block>
+        </blockquote>
+      </div>
+    </div>
 </div>
 </html>

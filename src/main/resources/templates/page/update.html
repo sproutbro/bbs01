@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}">
+<div layout:fragment="content">
+  <form method="post" th:if="${bbs} != null" th:object="${bbs}" th:action="@{'/update/'}">
+  <table class="table">
+    <thead>
+    <tr>
+      <th scope="col" colspan="2">게시판 수정하기 양식</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <th scope="row"><input type="text" class="form-control" placeholder="글 제목" name="bbsTitle" maxlength="50" th:value="*{bbsTitle}"></th>
+    </tr>
+    <tr>
+      <td><textarea class="form-control" placeholder="글 내용" name="bbsContent" th:text="*{bbsContent}"></textarea></td>
+    </tr>
+    </tbody>
+  </table>
+    <input type="hidden" name="bbsID" th:value="*{bbsID}">
+  <input class="btn btn-primary" type="submit" value="글 수정하기">
+  </form>
+</div>
+</html>

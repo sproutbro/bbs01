@@ -1,10 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}">
+<div layout:fragment="content">
+  <table class="table" th:if="${bbsList != null}">
+    <thead>
+    <tr>
+      <th scope="col"></th>
+      <th scope="col">제목</th>
+      <th scope="col">작성자</th>
+      <th scope="col">작성일</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item : ${bbsList}">
+      <th th:text="0"></th>
+      <th><a th:href="@{'/view/' + ${item.bbsID}}" th:text="${item.bbsTitle}"></a></th>
+      <th th:text="${item.userID}"></th>
+      <th th:text="${#dates.format(item.bbsDate, 'yyy-MM-dd')}"></th>
+    </tr>
+    </tbody>
+  </table>
+
+  <div>
+    <a th:if="${pageNumber != 1}" th:href="'/bbs/' + ${pageNumber - 1}">이전</a>
+    <span th:text="${pageNumber}"></span>
+    <a th:unless="${nextPage}" th:href="'/bbs/' + ${pageNumber + 1}">다음</a>
+  </div>
+  <a href="/write">
+    <button type="button" class="btn btn-primary">글쓰기</button>
+  </a>
+</div>
 </html>
